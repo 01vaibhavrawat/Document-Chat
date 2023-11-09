@@ -1,5 +1,6 @@
 import { makeStyles } from '@mui/styles';
 import React, { useState, useRef, useEffect } from 'react';
+import customTheme from "../../constants/customTheme";
 import {
   Paper,
   TextField,
@@ -14,28 +15,26 @@ const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    height: '82vh',
-    margin: '0 auto',  // Center the component horizontally
-    width: '75%',       // Set the component width to 85%
-    maxWidth: '800px',  // Optional: You can set a maximum width if needed
+    height: '81.2vh',
+    margin: '0 auto', 
+    width: '80%',      
+    maxWidth: '900px', 
   },
   chatHistory: {
     flex: 1,
     overflowY: 'auto',
     padding: '16px',
-    position: 'relative',  // Add relative positioning
+    position: 'relative', 
   },
   chatInput: {
     display: 'flex',
     padding: '16px',
-    position: 'absolute', // Position the chat input absolutely
-    bottom: 0,
-    left: 0,
-    width: '100%',        // Set the chat input to 100% width
+    width: '100%', 
+    float:"bottom"   
   },
   inputField: {
     flexGrow: 1,
-    width: '100%',         // Set the width of the input field to 100%
+    width: '100%',    
   },
 }));
 
@@ -60,22 +59,61 @@ const ChatComponent = () => {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.chatHistory} ref={chatHistoryRef}>
+      <div className={classes.chatHistory} ref={chatHistoryRef}>
         <List>
-          {messages.map((message, index) => (
-            <div key={index}>
+          <div key={"temporary"}>
               <ListItem alignItems="flex-start">
                 <ListItemText
-                  primary={message.text}
-                  secondary={message.sender === 'user' ? 'You' : 'ChatGPT'}
+                  secondary={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "}
+                  primary={"You"}
                 />
               </ListItem>
-              {index < messages.length - 1 && <Divider />}
             </div>
-          ))}
+          <div key={"temporary"} style={{background: customTheme.tersary_background}}>
+              <ListItem alignItems="flex-start">
+                <ListItemText
+                  secondary={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "}
+                  primary={"Server"}
+                />
+              </ListItem>
+            </div>
+            
+          <div key={"temporary"}>
+              <ListItem alignItems="flex-start">
+                <ListItemText
+                  secondary={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "}
+                  primary={"You"}
+                />
+              </ListItem>
+            </div>
+          <div key={"temporary"} style={{background: customTheme.tersary_background}}>
+              <ListItem alignItems="flex-start">
+                <ListItemText
+                  secondary={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "}
+                  primary={"Server"}
+                />
+              </ListItem>
+            </div>
+            
+          <div key={"temporary"}>
+              <ListItem alignItems="flex-start">
+                <ListItemText
+                  secondary={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "}
+                  primary={"You"}
+                />
+              </ListItem>
+            </div>
+          <div key={"temporary"} style={{background: customTheme.tersary_background}}>
+              <ListItem alignItems="flex-start">
+                <ListItemText
+                  secondary={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "}
+                  primary={"Server"}
+                />
+              </ListItem>
+            </div>
         </List>
-
-        <Paper className={classes.chatInput}>
+      </div>
+      <div className={classes.chatInput}>
           <TextField
             className={classes.inputField}
             variant="outlined"
@@ -84,8 +122,7 @@ const ChatComponent = () => {
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={handleSendMessage}
           />
-        </Paper>
-      </Paper>
+        </div>
     </div>
   );
 };

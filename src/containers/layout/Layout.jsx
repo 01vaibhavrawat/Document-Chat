@@ -17,7 +17,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import customTheme from "../../constants/customTheme";
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ChatUI from "../chat/ChatUI";
 
 const drawerWidth = 240;
@@ -115,7 +115,7 @@ export default function PersistentDrawerLeft() {
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
+              <ChevronLeftIcon sx={{color: customTheme.primary_text}} />
             ) : (
               <ChevronRightIcon />
             )}
@@ -123,18 +123,23 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-          {["First history", "Second history", "Third history", "Fourth history"].map((text, index) => (
-            <ListItem key={text} disablePadding>
+          {[
+            "This is history title",
+            "This is second history",
+            "Example history title",
+            "This is second history",
+          ].map((text, index) => (
+            <ListItem key={text} disablePadding sx={{}}>
               <ListItemButton
                 sx={{
-                  // textAlign: "center",
                   color: customTheme.primary_text,
-                  // background:customTheme.secondary_background
                 }}
               >
-              <ListItemIcon>
-                <ChatBubbleOutlineIcon sx={{color:customTheme.primary_text}} />
-              </ListItemIcon>
+                <ListItemIcon sx={{ minWidth: "35px" }}>
+                  <ChatBubbleOutlineIcon
+                    sx={{ color: customTheme.primary_text, fontSize: "19px" }}
+                  />
+                </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
