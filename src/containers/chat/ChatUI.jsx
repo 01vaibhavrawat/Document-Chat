@@ -25,6 +25,16 @@ const useStyles = makeStyles(() => ({
     overflowY: 'auto',
     padding: '16px',
     position: 'relative', 
+    '&::-webkit-scrollbar': {
+      width: '10px', // Set the width of the scrollbar
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: customTheme.tersary_background, // Set the scrollbar thumb color
+      borderRadius: '4px', // Round the edges of the scrollbar thumb
+    },
+    '&::-webkit-scrollbar-track': {
+      background: 'transparent', // Set the scrollbar track background
+    },
   },
   chatInput: {
     display: 'flex',
