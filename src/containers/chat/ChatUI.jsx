@@ -34,7 +34,7 @@ const useStyles = makeStyles(() => ({
     },
     '&::-webkit-scrollbar-track': {
       background: 'transparent', // Set the scrollbar track background
-    },
+    }
   },
   chatInput: {
     display: 'flex',
@@ -46,6 +46,9 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1,
     width: '100%',    
   },
+  historyText: {
+    fontFamily:"Arial, Helvetica, sans-serif !important"
+  }
 }));
 
 const ChatComponent = () => {
@@ -72,7 +75,8 @@ const ChatComponent = () => {
       <div className={classes.chatHistory} ref={chatHistoryRef}>
         <List>
           <div key={"temporary"}>
-              <ListItem alignItems="flex-start">
+              <ListItem
+                alignItems="flex-start">
                 <ListItemText
                   secondary={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "}
                   primary={"You"}
