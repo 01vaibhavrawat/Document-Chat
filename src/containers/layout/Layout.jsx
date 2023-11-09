@@ -19,6 +19,7 @@ import ListItemText from "@mui/material/ListItemText";
 import customTheme from "../../constants/customTheme";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ChatUI from "../chat/ChatUI";
+import FileUpload from "../fileUpload/FileUpload";
 
 const drawerWidth = 240;
 
