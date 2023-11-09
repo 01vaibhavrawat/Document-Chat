@@ -129,7 +129,7 @@ export default function PersistentDrawerLeft() {
             "Example history title",
             "This is second history",
           ].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{}}>
+            <ListItem key={text} disablePadding>
               <ListItemButton
                 sx={{
                   color: customTheme.primary_text,

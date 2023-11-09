@@ -46,9 +46,6 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1,
     width: '100%',    
   },
-  historyText: {
-    fontFamily:"Arial, Helvetica, sans-serif !important"
-  }
 }));
 
 const ChatComponent = () => {
