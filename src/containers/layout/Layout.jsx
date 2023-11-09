@@ -126,43 +126,60 @@ export default function PersistentDrawerLeft() {
             </IconButton>
           </DrawerHeader>
           <Divider />
-          <List>
-            {[
-              "This is history title",
-              "This is second history",
-              "Example history title",
-              "This is second history",
-            ].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton
-                  sx={{
-                    color: customTheme.primary_text,
-                  }}
-                >
-                  <ListItemIcon sx={{ minWidth: "35px" }}>
-                    <ChatBubbleOutlineIcon
-                      sx={{ color: customTheme.primary_text, fontSize: "19px" }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <div style={{display:"flex", justifyContent:"center"}}>
-            <Button
-              component={Link}
-              to="/file-upload"
-              sx={{
-                marginTop: "auto",
-                color: customTheme.primary_text,
-                background: customTheme.button_primary,
-                padding:"5px 45px",
-                boxShadow:"rgba(0, 0, 0, 0.16) 0px 1px 4px",
-              }}
-            >
-              File Upload
-            </Button>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: "100%",
+              paddingBottom: "15px",
+            }}
+          >
+            <List>
+              {[
+                "This is history title",
+                "This is second history",
+                "Example history title",
+                "This is second history",
+              ].map((text, index) => (
+                <ListItem key={text} disablePadding>
+                  <ListItemButton
+                    sx={{
+                      color: customTheme.primary_text,
+                    }}
+                  >
+                    <ListItemIcon sx={{ minWidth: "35px" }}>
+                      <ChatBubbleOutlineIcon
+                        sx={{
+                          color: customTheme.primary_text,
+                          fontSize: "19px",
+                        }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                component={Link}
+                to="/file-upload"
+                sx={{
+                  marginTop: "auto",
+                  background: customTheme.button_primary,
+                  padding: "4px 37px",
+                  boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+                  color:"black",
+                  "&:hover":{
+                    background: customTheme.button_primary
+                  }
+
+                }}
+              >
+                Upload New File
+              </Button>
+            </div>
           </div>
         </Drawer>
         <Main open={open}>
