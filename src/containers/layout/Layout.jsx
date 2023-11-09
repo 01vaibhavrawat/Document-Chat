@@ -20,6 +20,8 @@ import customTheme from "../../constants/customTheme";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ChatUI from "../chat/ChatUI";
 import FileUpload from "../fileUpload/FileUpload";
+import Button from "@mui/material/Button";
+import { Link, Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -81,76 +83,96 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar sx={{ background: customTheme.primary_background }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            {"<logo>"}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
+    <Router>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <AppBar position="fixed" open={open}>
+          <Toolbar sx={{ background: customTheme.primary_background }}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{ mr: 2, ...(open && { display: "none" }) }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              {"<logo>"}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          sx={{
             width: drawerWidth,
-            boxSizing: "border-box",
-            backgroundColor: customTheme.primary_background,
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon sx={{color: customTheme.primary_text}} />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {[
-            "This is history title",
-            "This is second history",
-            "Example history title",
-            "This is second history",
-          ].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton
-                sx={{
-                  color: customTheme.primary_text,
-                }}
-              >
-                <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <ChatBubbleOutlineIcon
-                    sx={{ color: customTheme.primary_text, fontSize: "19px" }}
-                  />
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-        <ChatUI />
-      </Main>
-    </Box>
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box",
+              backgroundColor: customTheme.primary_background,
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "ltr" ? (
+                <ChevronLeftIcon sx={{ color: customTheme.primary_text }} />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            {[
+              "This is history title",
+              "This is second history",
+              "Example history title",
+              "This is second history",
+            ].map((text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton
+                  sx={{
+                    color: customTheme.primary_text,
+                  }}
+                >
+                  <ListItemIcon sx={{ minWidth: "35px" }}>
+                    <ChatBubbleOutlineIcon
+                      sx={{ color: customTheme.primary_text, fontSize: "19px" }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <div style={{display:"flex", justifyContent:"center"}}>
+            <Button
+              component={Link}
+              to="/file-upload"
+              sx={{
+                marginTop: "auto",
+                color: customTheme.primary_text,
+                background: customTheme.button_primary,
+                padding:"5px 45px",
+                boxShadow:"rgba(0, 0, 0, 0.16) 0px 1px 4px",
+              }}
+            >
+              File Upload
+            </Button>
+          </div>
+        </Drawer>
+        <Main open={open}>
+          <DrawerHeader />
+          <Routes>
+            <Route path="/" element={<ChatUI />} />
+            <Route path="/file-upload" element={<FileUpload />} />
+          </Routes>
+        </Main>
+      </Box>
+    </Router>
   );
 }
