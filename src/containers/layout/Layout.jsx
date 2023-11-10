@@ -168,7 +168,7 @@ export default function PersistentDrawerLeft() {
                 sx={{
                   marginTop: "auto",
                   background: customTheme.button_primary,
-                  padding: "4px 37px",
+                  padding: "4px 35px 4px 35px",
                   boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
                   color:"black",
                   "&:hover":{
