@@ -22,6 +22,8 @@ import ChatUI from "../chat/ChatUI";
 import FileUpload from "../fileUpload/FileUpload";
 import Button from "@mui/material/Button";
 import { Link, Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import logo from "../../assets/Images/logo_only.png";
+import { Link as LinkR } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -97,9 +99,13 @@ export default function PersistentDrawerLeft() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              {"<logo>"}
-            </Typography>
+            <LinkR to="/">
+              <img
+                alt="logo"
+                src={logo}
+                style={{ objectFit: "contain", width: "40px", height: "35px" }}
+              ></img>
+            </LinkR>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -170,11 +176,10 @@ export default function PersistentDrawerLeft() {
                   background: customTheme.button_primary,
                   padding: "4px 35px 4px 35px",
                   boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-                  color:"black",
-                  "&:hover":{
-                    background: customTheme.button_primary
-                  }
-
+                  color: "black",
+                  "&:hover": {
+                    background: customTheme.button_primary,
+                  },
                 }}
               >
                 Upload New File
