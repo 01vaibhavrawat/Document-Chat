@@ -56,7 +56,7 @@ export const postPDFFileRequest = (formData) => {
   return (dispatch) => {
     dispatch(postPDFFile());
     axios
-      .post("https://example.com/api/posts", formData, {
+      .post("http://localhost:2000/doc2vec", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

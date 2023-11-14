@@ -72,8 +72,13 @@ const ChatComponent = () => {
     <div className={classes.root}>
       <div className={classes.chatHistory} ref={chatHistoryRef}>
         <List>
-          <div key={324} style={{ marginBottom: "10px", 
-              padding: "5px 8px",}}>
+          <div
+            key={324}
+            style={{
+              marginBottom: "10px",
+              padding: "5px 9px",
+            }}
+          >
             <Typography variant="subtitle1" color="primary">
               You
             </Typography>
@@ -89,7 +94,7 @@ const ChatComponent = () => {
             style={{
               background: customTheme.tersary_background,
               marginBottom: "10px",
-              padding: "5px 8px",
+              padding: "5px 9px",
             }}
           >
             <Typography variant="subtitle1" color="primary">
@@ -103,7 +108,7 @@ const ChatComponent = () => {
             </Typography>
           </div>
           <div key={324} style={{ marginBottom: "10px", 
-              padding: "5px 8px", }}>
+              padding: "5px 9px", }}>
             <Typography variant="subtitle1" color="primary">
               You
             </Typography>
@@ -119,7 +124,7 @@ const ChatComponent = () => {
             style={{
               background: customTheme.tersary_background,
               marginBottom: "10px",
-              padding: "5px 8px",
+              padding: "5px 9px",
             }}
           >
             <Typography variant="subtitle1" color="primary">
@@ -133,7 +138,7 @@ const ChatComponent = () => {
             </Typography>
           </div>
           <div key={324} style={{ marginBottom: "10px", 
-              padding: "5px 8px",}}>
+              padding: "5px 9px", }}>
             <Typography variant="subtitle1" color="primary">
               You
             </Typography>
@@ -149,7 +154,7 @@ const ChatComponent = () => {
             style={{
               background: customTheme.tersary_background,
               marginBottom: "10px",
-              padding: "5px 8px",
+              padding: "5px 9px",
             }}
           >
             <Typography variant="subtitle1" color="primary">
