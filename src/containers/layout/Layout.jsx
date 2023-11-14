@@ -73,7 +73,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
-  const {chat} = useChat();
+  const { chat } = useChat();
   const [open, setOpen] = React.useState(true);
   const [updatedChat, setUpdatedChat] = React.useState([]);
 
@@ -85,9 +85,16 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
-  React.useEffect(()=>{
-    console.log("chat log>", chat)
-  }, [chat])
+  const scrollToQuestion = (questionIndex) => {
+    const element = document.getElementById(`question-${questionIndex}`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  React.useEffect(() => {
+    console.log("chat log>", chat);
+  }, [chat]);
 
   return (
     <Router>
@@ -153,6 +160,7 @@ export default function PersistentDrawerLeft() {
                     sx={{
                       color: customTheme.primary_text,
                     }}
+                    onClick={() => scrollToQuestion(index)} // Call the function
                   >
                     <ListItemIcon sx={{ minWidth: "35px" }}>
                       <ChatBubbleOutlineIcon
@@ -190,7 +198,16 @@ export default function PersistentDrawerLeft() {
         <Main open={open}>
           <DrawerHeader />
           <Routes>
-            <Route path="/" element={<ChatUI useChat={useChat} setUpdatedChat={setUpdatedChat}/>} />
+            <Route
+              path="/"
+              element={
+                <ChatUI
+                  useChat={useChat}
+                  setUpdatedChat={setUpdatedChat}
+                  scrollToQuestion={scrollToQuestion} // Pass the function
+                />
+              }
+            />
             <Route path="/file-upload" element={<FileUpload />} />
           </Routes>
         </Main>

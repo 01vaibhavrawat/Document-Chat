@@ -21,14 +21,14 @@ const useStyles = makeStyles(() => ({
     padding: "16px",
     position: "relative",
     "&::-webkit-scrollbar": {
-      width: "10px", // Set the width of the scrollbar
+      width: "10px", 
     },
     "&::-webkit-scrollbar-thumb": {
-      background: customTheme.tersary_background, // Set the scrollbar thumb color
-      borderRadius: "4px", // Round the edges of the scrollbar thumb
+      background: customTheme.tersary_background,
+      borderRadius: "4px", 
     },
     "&::-webkit-scrollbar-track": {
-      background: "transparent", // Set the scrollbar track background
+      background: "transparent", 
     },
   },
   chatInput: {
@@ -43,11 +43,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ChatComponent = ({useChat, setUpdatedChat}) => {
+const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { chat, currentQuestion, setCurrentQuestion, askQuestion, addAnswer } =
-    useChat();
+  const {
+    chat,
+    currentQuestion,
+    setCurrentQuestion,
+    askQuestion,
+    addAnswer,
+  } = useChat();
   const chatHistoryRef = useRef(null);
 
   const handleSendMessage = (e) => {
@@ -61,7 +66,11 @@ const ChatComponent = ({useChat, setUpdatedChat}) => {
     let lastMessageIndex = chat.length - 1;
     if (lastMessageIndex >= 0 && !chat[lastMessageIndex].answer) {
       dispatch(
-        getChatResponseRequest({ question: currentQuestion }, addAnswer, chat)
+        getChatResponseRequest(
+          { question: currentQuestion },
+          addAnswer,
+          chat
+        )
       );
     }
     if (chatHistoryRef.current) {
@@ -97,7 +106,7 @@ const ChatComponent = ({useChat, setUpdatedChat}) => {
         )}
         <List>
           {chat.map((message, index) => (
-            <div key={index}>
+            <div key={index} id={`question-${index}`}>
               {message.question && (
                 <div style={{ marginBottom: "10px", padding: "5px 9px" }}>
                   <Typography variant="subtitle1" color="primary">
@@ -135,7 +144,10 @@ const ChatComponent = ({useChat, setUpdatedChat}) => {
           label="Type a message..."
           value={currentQuestion}
           onChange={(e) => setCurrentQuestion(e.target.value)}
-          onKeyPress={handleSendMessage}
+          onKeyPress={(e) => {
+            handleSendMessage(e);
+            scrollToQuestion(chat.length - 1);
+          }}
         />
       </div>
     </div>
