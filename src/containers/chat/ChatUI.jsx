@@ -5,6 +5,7 @@ import { TextField, List, Typography } from "@mui/material";
 import { getChatResponseRequest } from "../../store/actions";
 import { useDispatch } from "react-redux";
 import useChat from "../../hooks/useChat";
+import chatImg from "../../assets/Images/chat.svg";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -58,7 +59,7 @@ const ChatComponent = () => {
   };
 
   useEffect(() => {
-    let lastMessageIndex = chat.length - 1
+    let lastMessageIndex = chat.length - 1;
     if (lastMessageIndex >= 0 && !chat[lastMessageIndex].answer) {
       dispatch(
         getChatResponseRequest({ question: currentQuestion }, addAnswer, chat)
@@ -72,6 +73,15 @@ const ChatComponent = () => {
   return (
     <div className={classes.root}>
       <div className={classes.chatHistory} ref={chatHistoryRef}>
+        {chat.length === 0 && (
+          <div style={{display:"flex", justifyContent:"center", alignItems:"center", height:"100%", width:"90%"}}>
+            <img
+              alt="Start the conversation"
+              src={chatImg}
+              style={{ width: "400px", height: "400px", objectFit: "cover", opacity:".85" }}
+            />
+          </div>
+        )}
         <List>
           {chat.map((message, index) => (
             <div key={index}>
@@ -109,7 +119,7 @@ const ChatComponent = () => {
         <TextField
           className={classes.inputField}
           variant="outlined"
-          label="Type a message"
+          label="Type a message..."
           value={currentQuestion}
           onChange={(e) => setCurrentQuestion(e.target.value)}
           onKeyPress={handleSendMessage}
