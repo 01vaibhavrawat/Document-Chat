@@ -74,11 +74,24 @@ const ChatComponent = () => {
     <div className={classes.root}>
       <div className={classes.chatHistory} ref={chatHistoryRef}>
         {chat.length === 0 && (
-          <div style={{display:"flex", justifyContent:"center", alignItems:"center", height:"100%", width:"90%"}}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "96%",
+              width: "100%",
+            }}
+          >
             <img
               alt="Start the conversation"
               src={chatImg}
-              style={{ width: "400px", height: "400px", objectFit: "cover", opacity:".85" }}
+              style={{
+                width: "400px",
+                height: "400px",
+                objectFit: "cover",
+                opacity: ".85",
+              }}
             />
           </div>
         )}
