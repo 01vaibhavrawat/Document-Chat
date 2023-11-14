@@ -38,7 +38,6 @@ export const postPDFFileFailure = (error) => ({
 });
 
 export const getChatResponseRequest = (payload) => {
-  console.log("paylaod>", payload)
   return (dispatch) => {
     dispatch(getChatResponse());
     axios
