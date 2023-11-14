@@ -1,14 +1,10 @@
 import { makeStyles } from "@mui/styles";
 import React, { useState, useRef, useEffect } from "react";
 import customTheme from "../../constants/customTheme";
-import {
-  TextField,
-  Button,
-  List,
-  Typography,
-} from "@mui/material";
-import {getChatResponseRequest} from "../../store/actions";
+import { TextField, Button, List, Typography } from "@mui/material";
+import { getChatResponseRequest } from "../../store/actions";
 import { useDispatch } from "react-redux";
+import useChat from "../../hooks/useChat";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -50,6 +46,8 @@ const useStyles = makeStyles(() => ({
 const ChatComponent = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const { chat, currentQuestion, setCurrentQuestion, askQuestion, addAnswer } =
+    useChat();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const chatHistoryRef = useRef(null);
@@ -58,7 +56,7 @@ const ChatComponent = () => {
     if (e.key === "Enter" && newMessage) {
       setMessages([...messages, { text: newMessage, sender: "user" }]);
       setNewMessage("");
-      dispatch(getChatResponseRequest({question:newMessage}));
+      dispatch(getChatResponseRequest({ question: newMessage }));
     }
   };
 
@@ -107,8 +105,7 @@ const ChatComponent = () => {
               nisi ut aliquip ex ea commodo consequat.
             </Typography>
           </div>
-          <div key={324} style={{ marginBottom: "10px", 
-              padding: "5px 9px", }}>
+          <div key={324} style={{ marginBottom: "10px", padding: "5px 9px" }}>
             <Typography variant="subtitle1" color="primary">
               You
             </Typography>
@@ -137,8 +134,7 @@ const ChatComponent = () => {
               nisi ut aliquip ex ea commodo consequat.
             </Typography>
           </div>
-          <div key={324} style={{ marginBottom: "10px", 
-              padding: "5px 9px", }}>
+          <div key={324} style={{ marginBottom: "10px", padding: "5px 9px" }}>
             <Typography variant="subtitle1" color="primary">
               You
             </Typography>
