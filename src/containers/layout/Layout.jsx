@@ -23,6 +23,7 @@ import Button from "@mui/material/Button";
 import { Link, Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import logo from "../../assets/Images/logo_only.png";
 import { Link as LinkR } from "react-router-dom";
+import useChat from "../../hooks/useChat";
 
 const drawerWidth = 240;
 
@@ -72,7 +73,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
+  const {chat} = useChat();
   const [open, setOpen] = React.useState(true);
+  const [updatedChat, setUpdatedChat] = React.useState([]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -81,6 +84,10 @@ export default function PersistentDrawerLeft() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  React.useEffect(()=>{
+    console.log("chat log>", chat)
+  }, [chat])
 
   return (
     <Router>
@@ -140,13 +147,8 @@ export default function PersistentDrawerLeft() {
             }}
           >
             <List>
-              {[
-                "This is history title",
-                "This is second history",
-                "Example history title",
-                "This is second history"
-              ].map((text, index) => (
-                <ListItem key={text} disablePadding>
+              {updatedChat.map((obj, index) => (
+                <ListItem key={index} disablePadding>
                   <ListItemButton
                     sx={{
                       color: customTheme.primary_text,
@@ -160,7 +162,7 @@ export default function PersistentDrawerLeft() {
                         }}
                       />
                     </ListItemIcon>
-                    <ListItemText primary={text} />
+                    <ListItemText primary={obj.question.slice(0, 25)} />
                   </ListItemButton>
                 </ListItem>
               ))}
@@ -188,7 +190,7 @@ export default function PersistentDrawerLeft() {
         <Main open={open}>
           <DrawerHeader />
           <Routes>
-            <Route path="/" element={<ChatUI />} />
+            <Route path="/" element={<ChatUI useChat={useChat} setUpdatedChat={setUpdatedChat}/>} />
             <Route path="/file-upload" element={<FileUpload />} />
           </Routes>
         </Main>

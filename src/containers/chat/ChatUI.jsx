@@ -4,7 +4,6 @@ import customTheme from "../../constants/customTheme";
 import { TextField, List, Typography } from "@mui/material";
 import { getChatResponseRequest } from "../../store/actions";
 import { useDispatch } from "react-redux";
-import useChat from "../../hooks/useChat";
 import chatImg from "../../assets/Images/chat.svg";
 
 const useStyles = makeStyles(() => ({
@@ -44,7 +43,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ChatComponent = () => {
+const ChatComponent = ({useChat, setUpdatedChat}) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { chat, currentQuestion, setCurrentQuestion, askQuestion, addAnswer } =
@@ -68,6 +67,7 @@ const ChatComponent = () => {
     if (chatHistoryRef.current) {
       chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
     }
+    setUpdatedChat(chat);
   }, [chat]);
 
   return (
