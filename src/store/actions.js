@@ -37,11 +37,12 @@ export const postPDFFileFailure = (error) => ({
   payload: error,
 });
 
-export const getChatResponseRequest = () => {
+export const getChatResponseRequest = (payload) => {
+  console.log("paylaod>", payload)
   return (dispatch) => {
     dispatch(getChatResponse());
     axios
-      .get("https://jsonplaceholder.typicode.com/posts")
+      .get("http://localhost:2000/chat", {params: payload})
       .then((res) => {
         const response = res.data;
         dispatch(getChatResponseSuccess(response));

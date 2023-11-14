@@ -2,15 +2,13 @@ import { makeStyles } from "@mui/styles";
 import React, { useState, useRef, useEffect } from "react";
 import customTheme from "../../constants/customTheme";
 import {
-  Paper,
   TextField,
   Button,
   List,
-  ListItem,
-  ListItemText,
-  Divider,
   Typography,
 } from "@mui/material";
+import {getChatResponseRequest} from "../../store/actions";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -50,6 +48,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ChatComponent = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -59,6 +58,7 @@ const ChatComponent = () => {
     if (e.key === "Enter" && newMessage) {
       setMessages([...messages, { text: newMessage, sender: "user" }]);
       setNewMessage("");
+      dispatch(getChatResponseRequest({question:newMessage}));
     }
   };
 
