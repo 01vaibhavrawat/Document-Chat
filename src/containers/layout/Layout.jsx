@@ -24,6 +24,7 @@ import { Link, Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import logo from "../../assets/Images/logo_only.png";
 import { Link as LinkR } from "react-router-dom";
 import useChat from "../../hooks/useChat";
+import HistoryIcon from '@mui/icons-material/History';
 
 const drawerWidth = 240;
 
@@ -150,10 +151,32 @@ export default function PersistentDrawerLeft() {
               flexDirection: "column",
               justifyContent: "space-between",
               height: "100%",
-              paddingBottom: "15px",
+              paddingBottom: "25px",
             }}
           >
             <List>
+              {updatedChat.length === 0 && (
+                
+                <ListItem key={"helper"} disablePadding>
+                  <ListItemButton
+                    sx={{
+                      color: customTheme.primary_text,
+                    }}
+                  >
+                  <ListItemIcon sx={{ minWidth: "35px" }}>
+                    <HistoryIcon
+                      sx={{
+                        color: customTheme.primary_text,
+                        fontSize: "19px",
+                      }}
+                    />
+                  </ListItemIcon>
+                    <ListItemText
+                      primary="History Goes here..."
+                    />
+                  </ListItemButton>
+                </ListItem>
+              )}
               {updatedChat.map((obj, index) => (
                 <ListItem key={index} disablePadding>
                   <ListItemButton
