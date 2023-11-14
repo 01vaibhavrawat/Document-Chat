@@ -1,7 +1,7 @@
 import { makeStyles } from "@mui/styles";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import customTheme from "../../constants/customTheme";
-import { TextField, Button, List, Typography } from "@mui/material";
+import { TextField, List, Typography } from "@mui/material";
 import { getChatResponseRequest } from "../../store/actions";
 import { useDispatch } from "react-redux";
 import useChat from "../../hooks/useChat";
@@ -48,121 +48,61 @@ const ChatComponent = () => {
   const classes = useStyles();
   const { chat, currentQuestion, setCurrentQuestion, askQuestion, addAnswer } =
     useChat();
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
   const chatHistoryRef = useRef(null);
 
   const handleSendMessage = (e) => {
-    if (e.key === "Enter" && newMessage) {
-      setMessages([...messages, { text: newMessage, sender: "user" }]);
-      setNewMessage("");
-      dispatch(getChatResponseRequest({ question: newMessage }));
+    if (e.key === "Enter" && currentQuestion) {
+      askQuestion();
+      setCurrentQuestion("");
     }
   };
 
   useEffect(() => {
+    let lastMessageIndex = chat.length - 1
+    if (lastMessageIndex >= 0 && !chat[lastMessageIndex].answer) {
+      dispatch(
+        getChatResponseRequest({ question: currentQuestion }, addAnswer, chat)
+      );
+    }
     if (chatHistoryRef.current) {
       chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [chat]);
 
   return (
     <div className={classes.root}>
       <div className={classes.chatHistory} ref={chatHistoryRef}>
         <List>
-          <div
-            key={324}
-            style={{
-              marginBottom: "10px",
-              padding: "5px 9px",
-            }}
-          >
-            <Typography variant="subtitle1" color="primary">
-              You
-            </Typography>
-            <Typography variant="body1" color="textSecondary">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </Typography>
-          </div>
-          <div
-            key={3234}
-            style={{
-              background: customTheme.tersary_background,
-              marginBottom: "10px",
-              padding: "5px 9px",
-            }}
-          >
-            <Typography variant="subtitle1" color="primary">
-              Server
-            </Typography>
-            <Typography variant="body1" color="textSecondary">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </Typography>
-          </div>
-          <div key={324} style={{ marginBottom: "10px", padding: "5px 9px" }}>
-            <Typography variant="subtitle1" color="primary">
-              You
-            </Typography>
-            <Typography variant="body1" color="textSecondary">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </Typography>
-          </div>
-          <div
-            key={3234}
-            style={{
-              background: customTheme.tersary_background,
-              marginBottom: "10px",
-              padding: "5px 9px",
-            }}
-          >
-            <Typography variant="subtitle1" color="primary">
-              Server
-            </Typography>
-            <Typography variant="body1" color="textSecondary">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </Typography>
-          </div>
-          <div key={324} style={{ marginBottom: "10px", padding: "5px 9px" }}>
-            <Typography variant="subtitle1" color="primary">
-              You
-            </Typography>
-            <Typography variant="body1" color="textSecondary">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </Typography>
-          </div>
-          <div
-            key={3234}
-            style={{
-              background: customTheme.tersary_background,
-              marginBottom: "10px",
-              padding: "5px 9px",
-            }}
-          >
-            <Typography variant="subtitle1" color="primary">
-              Server
-            </Typography>
-            <Typography variant="body1" color="textSecondary">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </Typography>
-          </div>
+          {chat.map((message, index) => (
+            <div key={index}>
+              {message.question && (
+                <div style={{ marginBottom: "10px", padding: "5px 9px" }}>
+                  <Typography variant="subtitle1" color="primary">
+                    You
+                  </Typography>
+                  <Typography variant="body1" color="textSecondary">
+                    {message.question}
+                  </Typography>
+                </div>
+              )}
+              {message.answer && (
+                <div
+                  style={{
+                    background: customTheme.tersary_background,
+                    marginBottom: "10px",
+                    padding: "5px 9px",
+                  }}
+                >
+                  <Typography variant="subtitle1" color="primary">
+                    Server
+                  </Typography>
+                  <Typography variant="body1" color="textSecondary">
+                    {message.answer}
+                  </Typography>
+                </div>
+              )}
+            </div>
+          ))}
         </List>
       </div>
       <div className={classes.chatInput}>
@@ -170,8 +110,8 @@ const ChatComponent = () => {
           className={classes.inputField}
           variant="outlined"
           label="Type a message"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
+          value={currentQuestion}
+          onChange={(e) => setCurrentQuestion(e.target.value)}
           onKeyPress={handleSendMessage}
         />
       </div>

@@ -37,7 +37,7 @@ export const postPDFFileFailure = (error) => ({
   payload: error,
 });
 
-export const getChatResponseRequest = (payload) => {
+export const getChatResponseRequest = (payload, addAnswer, chat) => {
   return (dispatch) => {
     dispatch(getChatResponse());
     axios
@@ -45,8 +45,10 @@ export const getChatResponseRequest = (payload) => {
       .then((res) => {
         const response = res.data;
         dispatch(getChatResponseSuccess(response));
+        addAnswer("This is an example answer.", chat);
       })
       .catch((error) => {
+        addAnswer("Failed to get response from the server.", chat)
         dispatch(getChatResponseFailure(error.message));
       });
   };
