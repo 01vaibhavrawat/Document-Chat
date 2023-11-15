@@ -103,7 +103,7 @@ const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
                 }}
               />
             </div>
-            {!hasUserUploadedDocument && (
+            {!hasUserUploadedDocument ? (
               <div
                 style={{
                   display: "flex",
@@ -114,6 +114,18 @@ const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
                 <div>
                   Please upload a PDF file <Link to="file-upload">here</Link> to
                   start a conversation!{" "}
+                </div>
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  color: customTheme.primary_background,
+                }}
+              >
+                <div>
+                  File uploaded! Type and press enter to start chatting.
                 </div>
               </div>
             )}
