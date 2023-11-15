@@ -5,6 +5,7 @@ import { TextField, List, Typography } from "@mui/material";
 import { getChatResponseRequest } from "../../store/actions";
 import { useDispatch } from "react-redux";
 import chatImg from "../../assets/Images/chat.svg";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -44,6 +45,9 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
+
+  const hasUserUploadedDocument = sessionStorage.getItem("hasUserUploadedDocument");
+
   const dispatch = useDispatch();
   const classes = useStyles();
   const {
@@ -84,12 +88,13 @@ const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
     <div className={classes.root}>
       <div className={classes.chatHistory} ref={chatHistoryRef}>
         {chat.length === 0 && (
+          <>
           <div
             style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "96%",
+              height: "90%",
               width: "100%",
             }}
           >
@@ -104,6 +109,10 @@ const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
               }}
             />
           </div>
+          <div style={{display:"flex", justifyContent:"center", color: customTheme.primary_background}}>
+          <div>Please upload a PDF file <Link to="file-upload">here</Link> to start a conversation! </div>
+          </div>
+          </>
         )}
         <List>
           {chat.map((message, index) => (
@@ -138,7 +147,7 @@ const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
           ))}
         </List>
       </div>
-      <div className={classes.chatInput}>
+      {hasUserUploadedDocument && <div className={classes.chatInput}>
         <TextField
           className={classes.inputField}
           variant="outlined"
@@ -150,7 +159,7 @@ const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
             scrollToQuestion(chat.length - 1);
           }}
         />
-      </div>
+      </div>}
     </div>
   );
 };
