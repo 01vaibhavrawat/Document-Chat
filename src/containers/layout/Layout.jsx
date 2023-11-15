@@ -74,7 +74,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
-  const { chat } = useChat();
   const [open, setOpen] = React.useState(true);
   const [updatedChat, setUpdatedChat] = React.useState([]);
 

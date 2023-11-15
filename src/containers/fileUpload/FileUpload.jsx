@@ -1,12 +1,16 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import customTheme from "../../constants/customTheme";
-import {postPDFFileRequest} from "../../store/actions";
-import { useDispatch } from "react-redux";
+import { postPDFFileRequest } from "../../store/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const FileUpload = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loading} = useSelector((state) => state);
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -18,11 +22,9 @@ const FileUpload = () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append("file", selectedFile);
-
-      dispatch(postPDFFileRequest(formData));
+      dispatch(postPDFFileRequest(formData, navigate));
     }
   };
-
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -71,9 +73,25 @@ const FileUpload = () => {
               marginTop: "10px",
               background: customTheme.primary_background,
               color: customTheme.primary_text,
+              position: "relative", 
+              minHeight:"35px", 
+
             }}
           >
-            Upload
+            {loading ? (
+              <CircularProgress
+                size={24}
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  marginTop: -12,
+                  marginLeft: -12,
+                  color: customTheme.primary_text
+                }}
+              />
+            ) : "Upload"}
+            
           </Button>
         </div>
       )}

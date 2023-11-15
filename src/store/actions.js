@@ -54,7 +54,7 @@ export const getChatResponseRequest = (payload, addAnswer, chat) => {
   };
 };
 
-export const postPDFFileRequest = (formData) => {
+export const postPDFFileRequest = (formData, navigate) => {
   return (dispatch) => {
     dispatch(postPDFFile());
     axios
@@ -66,9 +66,13 @@ export const postPDFFileRequest = (formData) => {
       .then((response) => {
         const post = response.data;
         dispatch(postPDFFileSuccess(post));
+        sessionStorage.setItem("hasUserUploadedDocument", true)
+        navigate("/");
       })
       .catch((error) => {
         dispatch(postPDFFileFailure(error.message));
+        sessionStorage.setItem("hasUserUploadedDocument", false);
+        window.alert("File upload failed, please try again.");
       });
   };
 };

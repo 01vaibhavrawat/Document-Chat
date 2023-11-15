@@ -1,5 +1,5 @@
 import { makeStyles } from "@mui/styles";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import customTheme from "../../constants/customTheme";
 import { TextField, List, Typography } from "@mui/material";
 import { getChatResponseRequest } from "../../store/actions";
@@ -22,14 +22,14 @@ const useStyles = makeStyles(() => ({
     padding: "16px",
     position: "relative",
     "&::-webkit-scrollbar": {
-      width: "10px", 
+      width: "10px",
     },
     "&::-webkit-scrollbar-thumb": {
       background: customTheme.tersary_background,
-      borderRadius: "4px", 
+      borderRadius: "4px",
     },
     "&::-webkit-scrollbar-track": {
-      background: "transparent", 
+      background: "transparent",
     },
   },
   chatInput: {
@@ -45,18 +45,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
-
-  const hasUserUploadedDocument = sessionStorage.getItem("hasUserUploadedDocument");
-
   const dispatch = useDispatch();
+  const [hasUserUploadedDocument, setHasUserUploadedDocument] = useState(false);
   const classes = useStyles();
-  const {
-    chat,
-    currentQuestion,
-    setCurrentQuestion,
-    askQuestion,
-    addAnswer,
-  } = useChat();
+  const { chat, currentQuestion, setCurrentQuestion, askQuestion, addAnswer } =
+    useChat();
   const chatHistoryRef = useRef(null);
 
   const handleSendMessage = (e) => {
@@ -66,17 +59,18 @@ const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
   };
 
   useEffect(() => {
+    setHasUserUploadedDocument(
+      sessionStorage.getItem("hasUserUploadedDocument")
+    );
+  }, []);
+
+  useEffect(() => {
     let lastMessageIndex = chat.length - 1;
-    if ( !chat[lastMessageIndex]?.answer) {
+    if (!chat[lastMessageIndex]?.answer) {
       dispatch(
-        getChatResponseRequest(
-          { question: currentQuestion },
-          addAnswer,
-          chat
-        )
+        getChatResponseRequest({ question: currentQuestion }, addAnswer, chat)
       );
       setCurrentQuestion("");
-
     }
     if (chatHistoryRef.current) {
       chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
@@ -89,29 +83,40 @@ const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
       <div className={classes.chatHistory} ref={chatHistoryRef}>
         {chat.length === 0 && (
           <>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "90%",
-              width: "100%",
-            }}
-          >
-            <img
-              alt="Start the conversation"
-              src={chatImg}
+            <div
               style={{
-                width: "400px",
-                height: "400px",
-                objectFit: "cover",
-                opacity: ".85",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "90%",
+                width: "100%",
               }}
-            />
-          </div>
-          <div style={{display:"flex", justifyContent:"center", color: customTheme.primary_background}}>
-          <div>Please upload a PDF file <Link to="file-upload">here</Link> to start a conversation! </div>
-          </div>
+            >
+              <img
+                alt="Start the conversation"
+                src={chatImg}
+                style={{
+                  width: "400px",
+                  height: "400px",
+                  objectFit: "cover",
+                  opacity: ".85",
+                }}
+              />
+            </div>
+            {!hasUserUploadedDocument && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  color: customTheme.primary_background,
+                }}
+              >
+                <div>
+                  Please upload a PDF file <Link to="file-upload">here</Link> to
+                  start a conversation!{" "}
+                </div>
+              </div>
+            )}
           </>
         )}
         <List>
@@ -147,19 +152,21 @@ const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
           ))}
         </List>
       </div>
-      {hasUserUploadedDocument && <div className={classes.chatInput}>
-        <TextField
-          className={classes.inputField}
-          variant="outlined"
-          label="Type a message..."
-          value={currentQuestion}
-          onChange={(e) => setCurrentQuestion(e.target.value)}
-          onKeyPress={(e) => {
-            handleSendMessage(e);
-            scrollToQuestion(chat.length - 1);
-          }}
-        />
-      </div>}
+      {hasUserUploadedDocument && (
+        <div className={classes.chatInput}>
+          <TextField
+            className={classes.inputField}
+            variant="outlined"
+            label="Type a message..."
+            value={currentQuestion}
+            onChange={(e) => setCurrentQuestion(e.target.value)}
+            onKeyPress={(e) => {
+              handleSendMessage(e);
+              scrollToQuestion(chat.length - 1);
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };

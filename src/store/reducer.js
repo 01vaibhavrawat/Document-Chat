@@ -11,6 +11,7 @@ const initialState = {
   posts: [],
   loading: false,
   error: null,
+  fileUploadStatus: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -24,11 +25,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        fileUploadStatus: true,
       };
     case POST_PDF_FILE_FAILURE:
       return {
         ...state,
         loading: false,
+        fileUploadStatus: false,
       };
     case GET_CHAT_RESPONSE:
       return {
