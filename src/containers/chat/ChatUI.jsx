@@ -57,14 +57,13 @@ const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
 
   const handleSendMessage = (e) => {
     if (e.key === "Enter" && currentQuestion) {
-      askQuestion();
-      setCurrentQuestion("");
+      askQuestion(currentQuestion);
     }
   };
 
   useEffect(() => {
     let lastMessageIndex = chat.length - 1;
-    if (lastMessageIndex >= 0 && !chat[lastMessageIndex].answer) {
+    if ( !chat[lastMessageIndex]?.answer) {
       dispatch(
         getChatResponseRequest(
           { question: currentQuestion },
@@ -72,6 +71,8 @@ const ChatComponent = ({ useChat, setUpdatedChat, scrollToQuestion }) => {
           chat
         )
       );
+      setCurrentQuestion("");
+
     }
     if (chatHistoryRef.current) {
       chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;

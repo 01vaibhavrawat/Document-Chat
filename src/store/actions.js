@@ -45,7 +45,7 @@ export const getChatResponseRequest = (payload, addAnswer, chat) => {
       .then((res) => {
         const response = res.data;
         dispatch(getChatResponseSuccess(response));
-        addAnswer("This is an example answer.", chat);
+        addAnswer(response.response, chat);
       })
       .catch((error) => {
         addAnswer("Failed to get response from the server.", chat)

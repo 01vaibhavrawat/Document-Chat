@@ -93,10 +93,6 @@ export default function PersistentDrawerLeft() {
     }
   };
 
-  React.useEffect(() => {
-    console.log("chat log>", chat);
-  }, [chat]);
-
   return (
     <Router>
       <Box sx={{ display: "flex" }}>

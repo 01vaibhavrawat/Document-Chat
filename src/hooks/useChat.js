@@ -18,8 +18,8 @@ const useChat = () => {
     });
   };
 
-  const askQuestion = () => {
-    const newMessage = { question: currentQuestion };
+  const askQuestion = (currentQues) => {
+    const newMessage = { question: currentQues };
     addMessage(newMessage);
   };
 
