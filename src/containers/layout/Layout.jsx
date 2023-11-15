@@ -161,6 +161,7 @@ export default function PersistentDrawerLeft() {
                   <ListItemButton
                     sx={{
                       color: customTheme.primary_text,
+                      cursor:"default"
                     }}
                   >
                   <ListItemIcon sx={{ minWidth: "35px" }}>
@@ -172,7 +173,7 @@ export default function PersistentDrawerLeft() {
                     />
                   </ListItemIcon>
                     <ListItemText
-                      primary="History Goes here..."
+                      primary="History goes here..."
                     />
                   </ListItemButton>
                 </ListItem>
